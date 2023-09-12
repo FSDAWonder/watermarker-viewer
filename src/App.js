@@ -14,6 +14,7 @@ const App = () => {
     <div className="App">
       <h1>Document Viewer</h1>
       <WaterMarker docs={docs[0].uri} setPdfUrl={setPdfUrl} />
+     
       {pdfUrl ? (
         <iframe className="iframe" src={pdfUrl} title="description">
          
@@ -32,6 +33,7 @@ const App = () => {
           }}
         />
       )}
+      
     </div>
   );
 };

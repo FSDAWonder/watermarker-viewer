@@ -1,11 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { PDFDocument } from "pdf-lib";
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import UndoIcon from '@mui/icons-material/Undo';
+import RedoIcon from '@mui/icons-material/Redo';
+import Button from "@mui/material/Button";
+import Stack from '@mui/material/Stack';
+const WaterMarker = ({ docs, setPdfUrl }) => {
+  const [history, setHistory] = useState([]);
+  const [historyIndex, setHistoryIndex] = useState(-1);
+  const [inputFile, setInputFile] = useState(null);
+  const fileRef = useRef();
 
-const WaterMarker = ({docs, setPdfUrl}) => {
+  const inputHandler = async (event) => {
+    const targetFile = event.target.files[0];
+    let reader = new FileReader();
+    reader.readAsArrayBuffer(targetFile);
+    reader.onload = function () {
+      setInputFile(reader.result);
+      const lengthHistory = history.length;
+      setHistoryIndex(lengthHistory);
+      setHistory((current) => [...current, reader.result]);
+      HandleWaterMarker(reader.result);
+    };
+    reader.onerror = function () {
+      console.log(reader.error);
+    };
+  };
 
-
-  async function handleWatermarkPdf(file, opacityValue) {
-
+  const HandleWaterMarker = async (imgFile) => {
     const getPdfUrl = docs;
     const existingPdfBytes = await fetch(getPdfUrl).then((res) =>
       res.arrayBuffer()
@@ -13,10 +35,8 @@ const WaterMarker = ({docs, setPdfUrl}) => {
 
     const pngImageBytes = await fetch(docs).then((res) => res.arrayBuffer());
     const pdfDoc = await PDFDocument.load(existingPdfBytes);
-    const emblemUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKiM295NpkVb8jzMlWEcyfUf29CDhpQEVlpwQ1KweMavnhsC1oSaQWHYRedlssSuw43OY&usqp=CAU";
-    const emblemImageBytes = await fetch(emblemUrl).then((res) =>
-      res.arrayBuffer()
-    );
+    const emblemImageBytes = imgFile;
+
     const pngImage = await pdfDoc.embedPng(emblemImageBytes);
     const pngDims = pngImage.scale(0.5);
     const pages = pdfDoc.getPages();
@@ -27,45 +47,48 @@ const WaterMarker = ({docs, setPdfUrl}) => {
         y: pages[i].getHeight() / 2 - pngDims.height + 150,
         width: pngDims.width,
         height: pngDims.height,
-        // opacity: opacityValue,
       });
     }
     const pdfBytes = await pdfDoc.save();
     const blob = new Blob([pdfBytes], { type: "application/pdf" });
-    console.log("blob", blob);
-    
-    
+
     const docUrl = URL.createObjectURL(blob);
     setPdfUrl(docUrl);
-    localStorage.setItem("setInLocalBlob",docUrl);
-    // console.log("blob:", docUrl);
+  };
+
+  async function handleWatermarkPdf() {
+    fileRef.current.click();
+    return;
   }
 
-const unDoHandler = async ({pdfBytes}) =>{
-    const blob = new Blob([pdfBytes], { type: "application/pdf" });
-    const docUrl = URL.revokeObjectURL(blob);
-    setPdfUrl(docUrl);
-    
-}
-
-// const reDoHandler = async ({pdfBytes}) =>{
-    
-//     const blob = new Blob([pdfBytes], { type: "application/pdf" });
-//     const fromPrevBlob = localStorage.getItem("setInLocalBlob");
-//     console.log("fromPrev", fromPrevBlob);
-
-//     const docUrl = URL.createObjectURL(fromPrevBlob);
-//     console.log("doc", docUrl)
-//     setPdfUrl(docUrl);
-   
-// }
+  const unDoHandler = async (navBtn) => {
+    const imageIndex = navBtn === "prev" ? historyIndex -1 : historyIndex +1 ;
+    if(imageIndex >= 0 && imageIndex <= history.length-1){
+      const imageFile = history[imageIndex]
+      HandleWaterMarker(imageFile)
+      setHistoryIndex(imageIndex);
+    }
+    else if(imageIndex === -1 ){
+      setHistoryIndex(imageIndex);
+      setPdfUrl("")
+    }
+  };
 
   return (
+    <Stack direction="column">
     <div>
-      <button onClick={handleWatermarkPdf}>Add WaterMark</button>
-      <button onClick={unDoHandler}>Undo</button>
-      {/* <button onClick={reDoHandler}>Redo</button> */}
+      <Button startIcon={<CloudUploadIcon />} variant="contained" onClick={handleWatermarkPdf}>Add WaterMark</Button>
+      <input
+        onChange={inputHandler}
+        ref={fileRef}
+        style={{ display: "none" }}
+        type="file"
+        accept="image/png"
+      ></input>
+      <Button startIcon={<UndoIcon />}  onClick={() =>unDoHandler("prev")} variant="outlined">Undo</Button>
+      <Button startIcon={<RedoIcon />} onClick={() =>unDoHandler("next")} variant="outlined">Redo</Button>
     </div>
+    </Stack>
   );
 };
 
