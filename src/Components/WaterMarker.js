@@ -11,6 +11,7 @@ const WaterMarker = ({ docs, setPdfUrl }) => {
   const [history, setHistory] = useState([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
   const [inputFile, setInputFile] = useState(null);
+  const [disableButton, setDisableButton] = useState(history);
   const fileRef = useRef();
 
   const inputHandler = async (event) => {
@@ -80,7 +81,11 @@ const WaterMarker = ({ docs, setPdfUrl }) => {
     }
   };
 const onCancel =() => {
-  setPdfUrl("")
+  setPdfUrl('');
+  // document.getElementById("undoBtn", "redoBtn").disabled=true;
+  setHistory('')
+  
+
 }
   return (
     <Stack direction="column">
@@ -93,8 +98,8 @@ const onCancel =() => {
         type="file"
         accept="image/png"
       ></input>
-      <Button sx={{ width: 120, padding: 1, margin: 1 }} startIcon={<UndoIcon />} onClick={() =>unDoHandler("prev")} variant="outlined">Undo</Button>
-      <Button sx={{ width: 120, padding: 1, margin: 1 }} startIcon={<RedoIcon />} onClick={() =>unDoHandler("next")} variant="outlined">Redo</Button>
+      <Button disabled={history == 0} id="undoBtn" sx={{ width: 120, padding: 1, margin: 1 }} startIcon={<UndoIcon />} onClick={() =>unDoHandler("prev")} variant="outlined">Undo</Button>
+      <Button disabled={history == 0} id="redoBtn" sx={{ width: 120, padding: 1, margin: 1 }} startIcon={<RedoIcon />} onClick={() =>unDoHandler("next")} variant="outlined">Redo</Button>
       <CancelIcon className="cancel-icon" onClick={onCancel}/>
       
     </div>
