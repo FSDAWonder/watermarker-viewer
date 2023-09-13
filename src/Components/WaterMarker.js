@@ -15,7 +15,7 @@ const WaterMarker = ({ docs, setPdfUrl, pdfUrl }) => {
   const fileRef = useRef();
 
   useEffect(() => {
-    if (history.length >= 1 ) {
+    if (history.length >= 2 ) {
       setDisableButton(false)
     }
     else{

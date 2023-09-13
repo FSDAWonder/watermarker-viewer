@@ -7,7 +7,7 @@ const App = () => {
   const [pdfUrl, setPdfUrl] = useState("");
 
   const docs = [
-    { uri: require("./sample/xpro.pdf"), fileName: "pdf", fileType: "pdf" },
+    { uri: require("./sample/sample.pdf"), fileName: "pdf", fileType: "pdf" },
     // { uri: "https://docs.google.com/spreadsheets/d/1ylrv10lHZZRRqdLvo_5RTKFwYA8jsOtI_TkXGJxzeWI/edit#gid=0"},
 
     // { uri: require("./sample/xpro.docx"), fileName: "doc1", fileType: "docx" },
