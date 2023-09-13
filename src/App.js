@@ -16,7 +16,7 @@ const App = () => {
   return (
     <div className="App">
       <h1 className="heading">Document Viewer</h1>
-      <WaterMarker docs={docs[0].uri} setPdfUrl={setPdfUrl} />
+      <WaterMarker docs={docs[0].uri} setPdfUrl={setPdfUrl} pdfUrl={pdfUrl}/>
      
       {pdfUrl ? (
         <iframe className="iframe" src={pdfUrl} title="description">
