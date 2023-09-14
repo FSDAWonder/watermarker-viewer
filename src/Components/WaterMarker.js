@@ -15,7 +15,7 @@ const WaterMarker = ({ docs, setPdfUrl, pdfUrl }) => {
   const fileRef = useRef();
 
   useEffect(() => {
-    if (history.length >= 2 ) {
+    if (history.length > setHistory) {
       setDisableButton(false)
     }
     else{
@@ -77,7 +77,7 @@ const WaterMarker = ({ docs, setPdfUrl, pdfUrl }) => {
     return;
   }
 
-  const unDoHandler = async (navBtn, lengthHistory) => {
+  const unDoHandler = async (navBtn) => {
     const imageIndex = navBtn === "prev" ? historyIndex - 1 : historyIndex + 1;
     if (imageIndex >= 0 && imageIndex <= history.length - 1) {
       const imageFile = history[imageIndex];
