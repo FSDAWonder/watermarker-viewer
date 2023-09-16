@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
 import "./App.css";
 import WaterMarker from "./Components/WaterMarker";
+import EsignFonts from "./Components/EsignFonts";
 
 const App = () => {
   const [pdfUrl, setPdfUrl] = useState("");
 
   const docs = [
-    { uri: require("./sample/sample.pdf"), fileName: "pdf", fileType: "pdf" },
+    { uri: require("./sample/xpro.pdf"), fileName: "pdf", fileType: "pdf" },
     // { uri: "https://docs.google.com/spreadsheets/d/1ylrv10lHZZRRqdLvo_5RTKFwYA8jsOtI_TkXGJxzeWI/edit#gid=0"},
 
     // { uri: require("./sample/xpro.docx"), fileName: "doc1", fileType: "docx" },
@@ -17,7 +18,7 @@ const App = () => {
     <div className="App">
       <h1 className="heading">Document Viewer</h1>
       <WaterMarker docs={docs[0].uri} setPdfUrl={setPdfUrl} pdfUrl={pdfUrl} />
-
+      <EsignFonts docs={docs[0].uri} setPdfUrl={setPdfUrl} pdfUrl={pdfUrl}  />
       {pdfUrl ? (
         <iframe className="iframe" src={pdfUrl} title="description"></iframe>
       ) : (

@@ -64,7 +64,7 @@ const WaterMarker = ({ docs, setPdfUrl, pdfUrl }) => {
         y: pages[i].getHeight() / 2 - pngDims.height + 150,
         width: pngDims.width,
         height: pngDims.height,
-        opacity: 0.5,
+        opacity: 0.3,
       });
     }
     const pdfBytes = await pdfDoc.save();
