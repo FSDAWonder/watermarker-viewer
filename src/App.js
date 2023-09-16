@@ -12,22 +12,20 @@ const App = () => {
 
     // { uri: require("./sample/xpro.docx"), fileName: "doc1", fileType: "docx" },
   ];
-
+  
   return (
     <div className="App">
       <h1 className="heading">Document Viewer</h1>
-      <WaterMarker docs={docs[0].uri} setPdfUrl={setPdfUrl} pdfUrl={pdfUrl}/>
-     
+      <WaterMarker docs={docs[0].uri} setPdfUrl={setPdfUrl} pdfUrl={pdfUrl} />
+
       {pdfUrl ? (
-        <iframe className="iframe" src={pdfUrl} title="description">
-         
-        </iframe>
+        <iframe className="iframe" src={pdfUrl} title="description"></iframe>
       ) : (
         <DocViewer
           pluginRenderers={DocViewerRenderers}
           documents={docs}
           className="my-doc-viewer-style"
-          style={{width: 1350, height: 500}} 
+          style={{ width: 1350, height: 500 }}
           theme={{
             primary: "#5296d8",
             secondary: "#ffffff",
@@ -47,7 +45,6 @@ const App = () => {
           }}
         />
       )}
-      
     </div>
   );
 };

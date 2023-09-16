@@ -6,10 +6,12 @@ import RedoIcon from "@mui/icons-material/Redo";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import CancelIcon from "@mui/icons-material/Cancel";
+ 
 
 const WaterMarker = ({ docs, setPdfUrl, pdfUrl }) => {
   const [history, setHistory] = useState([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
+  // eslint-disable-next-line no-unused-vars
   const [inputFile, setInputFile] = useState(null);
   const [disableButton, setDisableButton] = useState(true);
   const fileRef = useRef();
@@ -48,7 +50,7 @@ const WaterMarker = ({ docs, setPdfUrl, pdfUrl }) => {
       res.arrayBuffer()
     );
 
-    const pngImageBytes = await fetch(docs).then((res) => res.arrayBuffer());
+    // const pngImageBytes = await fetch(docs).then((res) => res.arrayBuffer());
     const pdfDoc = await PDFDocument.load(existingPdfBytes);
     const emblemImageBytes = imgFile;
 
@@ -66,6 +68,7 @@ const WaterMarker = ({ docs, setPdfUrl, pdfUrl }) => {
       });
     }
     const pdfBytes = await pdfDoc.save();
+    
     const blob = new Blob([pdfBytes], { type: "application/pdf" });
 
     const docUrl = URL.createObjectURL(blob);
