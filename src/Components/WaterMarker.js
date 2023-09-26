@@ -46,6 +46,7 @@ const WaterMarker = ({ docs, setPdfUrl, pdfUrl }) => {
 
   const HandleWaterMarker = async (imgFile) => {
     const getPdfUrl = docs;
+    console.log('docs', docs);
     const existingPdfBytes = await fetch(getPdfUrl).then((res) =>
       res.arrayBuffer()
     );
