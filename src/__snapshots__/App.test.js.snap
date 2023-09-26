@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`component render with no documents 1`] = `
+<div
+  class="sc-dtBdUo iWaeFc"
+  data-testid="react-doc-viewer"
+  id="react-doc-viewer"
+>
+  <div
+    class="sc-imWYAI dTuydp"
+    data-testid="header-bar"
+    id="header-bar"
+  />
+  <div
+    class="sc-jXbUNg hysiap"
+    data-testid="proxy-renderer"
+    id="proxy-renderer"
+  >
+    <div
+      id="no-documents"
+    />
+  </div>
+</div>
+`;
+
+exports[`renders component with no documents 1`] = `
+<div
+  class="sc-dtBdUo iWaeFc"
+  data-testid="react-doc-viewer"
+  id="react-doc-viewer"
+>
+  <div
+    class="sc-imWYAI dTuydp"
+    data-testid="header-bar"
+    id="header-bar"
+  />
+  <div
+    class="sc-jXbUNg hysiap"
+    data-testid="proxy-renderer"
+    id="proxy-renderer"
+  >
+    <div
+      id="no-documents"
+    />
+  </div>
+</div>
+`;
