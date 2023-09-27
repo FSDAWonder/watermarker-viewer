@@ -15,30 +15,32 @@ const App = () => {
     { uri: require("./sample/xpro.pdf"), fileName: "pdf", fileType: "pdf" },
 
   ];
-  
+
   return (
     <div className="App">
       <h className="heading">Document Viewer</h>
       <WaterMarker docs={docs[0].uri} setPdfUrl={setPdfUrl} pdfUrl={pdfUrl} />
       {/* <EsignFonts docs={docs[0].uri} setPdfUrl={setPdfUrl} pdfUrl={pdfUrl}  /> */}
       {pdfUrl ? (
-        <iframe className="iframe" src={pdfUrl} title="description"></iframe>
+        <iframe className="iframe" src={pdfUrl} title="description" data-testid='iFramePdfUrl'></iframe>
       ) : (
-        <DocViewer
-          pluginRenderers={DocViewerRenderers}
-          documents={docs}
-         
-          style={{ width: 1350, height: 500 }}
-          
-          prefetchMethod="GET"
-          config={{
-            header: {
-              disableHeader: false,
-              disableFileName: false,
-              retainURLParams: false,
-            },
-          }}
-        />
+        <div data-testid='docViewer'>
+          <DocViewer
+            pluginRenderers={DocViewerRenderers}
+            documents={docs}
+
+            style={{ width: 1350, height: 500 }}
+
+            prefetchMethod="GET"
+            config={{
+              header: {
+                disableHeader: false,
+                disableFileName: false,
+                retainURLParams: false,
+              },
+            }}
+          />
+        </div>
       )}
     </div>
   );

@@ -6,7 +6,7 @@ import RedoIcon from "@mui/icons-material/Redo";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import CancelIcon from "@mui/icons-material/Cancel";
- 
+
 
 const WaterMarker = ({ docs, setPdfUrl, pdfUrl }) => {
   const [history, setHistory] = useState([]);
@@ -20,7 +20,7 @@ const WaterMarker = ({ docs, setPdfUrl, pdfUrl }) => {
     if (history.length > setHistory) {
       setDisableButton(false)
     }
-    else{
+    else {
       setDisableButton(true)
     }
   }, [history]);
@@ -36,7 +36,7 @@ const WaterMarker = ({ docs, setPdfUrl, pdfUrl }) => {
         setHistoryIndex(lengthHistory);
         setHistory((current) => [...current, reader.result]);
         HandleWaterMarker(reader.result);
-        
+
       };
       reader.onerror = function () {
         console.log(reader.error);
@@ -69,7 +69,7 @@ const WaterMarker = ({ docs, setPdfUrl, pdfUrl }) => {
       });
     }
     const pdfBytes = await pdfDoc.save();
-    
+
     const blob = new Blob([pdfBytes], { type: "application/pdf" });
 
     const docUrl = URL.createObjectURL(blob);
@@ -91,13 +91,13 @@ const WaterMarker = ({ docs, setPdfUrl, pdfUrl }) => {
       setHistoryIndex(imageIndex);
       setPdfUrl("");
     }
-    if (navBtn === "next" && history.length-1 === imageIndex) { 
+    if (navBtn === "next" && history.length - 1 === imageIndex) {
       setDisableButton(true);
     }
-    else{
+    else {
       setDisableButton(false);
     }
-    
+
   };
 
   const onCancel = () => {
@@ -118,6 +118,7 @@ const WaterMarker = ({ docs, setPdfUrl, pdfUrl }) => {
           Add WaterMark
         </Button>
         <input
+          data-testid='input-handler'
           onChange={inputHandler}
           ref={fileRef}
           style={{ display: "none" }}
@@ -144,6 +145,9 @@ const WaterMarker = ({ docs, setPdfUrl, pdfUrl }) => {
         </Button>
         <CancelIcon className="cancel-icon" onClick={onCancel} />
       </div>
+      {
+        pdfUrl && <div data-testid='watermark-added-pdfUrl'></div>
+      }
     </Stack>
   );
 };
